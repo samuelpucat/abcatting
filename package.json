@@ -1,5 +1,5 @@
 {
-  "name": "AB cat testing",
+  "name": "ab-cat-testing",
   "version": "3.0.0",
   "description": "App to vote for cats",
   "engines": {

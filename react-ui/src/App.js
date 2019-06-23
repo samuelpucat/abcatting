@@ -7,6 +7,8 @@ import Voting from "./components/Voting";
 import Statistics from "./components/Statistics";
 import Top from "./components/Top";
 
+const jupi = "abcd";
+
 class App extends React.Component {
     render() {
         return (

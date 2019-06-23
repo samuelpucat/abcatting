@@ -6,6 +6,12 @@ const numCPUs = require('os').cpus().length;
 const isDev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 5000;
 
+const mongoose = require("mongoose");
+mongoose.set('useFindAndModify', false);
+
+const catsController = require("./api/controllers/catsController");
+const voteController = require("./api/controllers/voteController");
+
 // Multi-process to utilize all CPU cores.
 if (!isDev && cluster.isMaster) {
   console.error(`Node cluster master ${process.pid} is running`);
@@ -22,21 +28,24 @@ if (!isDev && cluster.isMaster) {
 } else {
   const app = express();
 
+  //TODO: move PW to environment
+  const mongoPW = "JcR8DYX65FsjjUpX"
+  mongoose.connect("mongodb+srv://readWriteAnuDatabase:" + mongoPW + "@cluster0-a6tpd.mongodb.net/test?retryWrites=true&w=majority");
+
   // Priority serve any static files.
   app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
 
   // Answer API requests.
-  app.get('/api', function (req, res) {
-    res.set('Content-Type', 'application/json');
-    res.send('{"message":"Hello from the custom server!"}');
-  });
+  app.get('/getRandomPair', catsController.getRandomPair);
+  app.post('/vote', voteController.vote);
+  app.get('/getTotalVotesStats', voteController.getTotalVotesStats);
 
   // All remaining requests return the React app, so it can handle routing.
-  app.get('*', function(request, response) {
+  app.get('*', function (request, response) {
     response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
   });
 
   app.listen(PORT, function () {
-    console.error(`Node ${isDev ? 'dev server' : 'cluster worker '+process.pid}: listening on port ${PORT}`);
+    console.error(`Node ${isDev ? 'dev server' : 'cluster worker ' + process.pid}: listening on port ${PORT}`);
   });
 }

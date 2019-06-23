@@ -9,6 +9,7 @@ class App2 extends React.Component {
             <li>Instagram</li>
             <li>WhatsApp</li>
             <li>Oculus</li>
+            <li>Rift</li>
             </ul>
         </div>
         );

@@ -9,6 +9,7 @@ import Top from "./components/Top";
 
 const jupi = "abcd";
 const a = 1;
+const b = 2;
 
 class App extends React.Component {
     render() {

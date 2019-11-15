@@ -8,6 +8,7 @@ import Statistics from "./components/Statistics";
 import Top from "./components/Top";
 
 const jupi = "abcd";
+const a = 1;
 
 class App extends React.Component {
     render() {
